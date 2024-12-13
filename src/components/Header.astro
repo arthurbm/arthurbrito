@@ -2,33 +2,39 @@
 import Container from "@components/Container.astro";
 import Link from "@components/Link.astro";
 import { SITE } from "@consts";
+
+const currentLocale = Astro.url.pathname.split("/")[1] || "en";
+const localePrefix = currentLocale === "en" ? "" : `/${currentLocale}`;
 ---
 
 <header>
   <Container>
     <div class="flex flex-wrap gap-y-2 justify-between">
-      <Link href="/" underline={false}>
+      <Link href={`${localePrefix}/`} underline={false}>
         <div class="font-semibold">
           {SITE.NAME}
         </div>
       </Link>
-      <nav class="flex gap-1">
-        <Link href="/blog">
-          blog
-        </Link>
-        <span>
-          {`/`}
-        </span>
-        <Link href="/work">
-          work
-        </Link>
-        <span>
-          {`/`}
-        </span>
-        <Link href="/projects">
-          projects
-        </Link>
-      </nav>
+      <div class="flex items-center gap-4">
+        <nav class="flex gap-1">
+          <Link href={`${localePrefix}/blog`}>
+            {currentLocale === "pt-br" ? "blog" : "blog"}
+          </Link>
+          <span>
+            {`/`}
+          </span>
+          <Link href={`${localePrefix}/work`}>
+            {currentLocale === "pt-br" ? "trabalho" : "work"}
+          </Link>
+          <span>
+            {`/`}
+          </span>
+          <Link href={`${localePrefix}/projects`}>
+            {currentLocale === "pt-br" ? "projetos" : "projects"}
+          </Link>
+        </nav>
+        <slot />
+      </div>
     </div>
   </Container>
 </header>

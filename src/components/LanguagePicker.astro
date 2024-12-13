@@ -1,0 +1,26 @@
+---
+const currentPath = Astro.url.pathname;
+const currentLocale = currentPath.split("/")[1];
+
+const locales = {
+  "en": "English",
+  "pt-br": "Português"
+};
+
+function getLocalizedPath(locale: string) {
+  const segments = currentPath.split("/");
+  segments[1] = locale;
+  return segments.join("/");
+}
+---
+
+<div class="flex gap-2 items-center">
+  {Object.entries(locales).map(([locale, label]) => (
+    <a
+      href={getLocalizedPath(locale)}
+      class={`text-sm ${currentLocale === locale ? "font-bold" : "opacity-75 hover:opacity-100"}`}
+    >
+      {label}
+    </a>
+  ))}
+</div> 
